@@ -1,8 +1,3 @@
-// ============================================
-//  T'Place Gestão Imobiliária — Backend
-//  Stack: Node.js + Express + lowdb (JSON)
-//  Deploy: Render.com (free tier)
-// ============================================
 
 const express = require('express');
 const cors    = require('cors');
@@ -14,24 +9,20 @@ const FileSync = require('lowdb/adapters/FileSync');
 const app  = express();
 const PORT = process.env.PORT || 3001;
 
-// ─── MIDDLEWARES ────────────────────────────
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ─── BANCO DE DADOS (JSON via lowdb) ────────
+
 const adapter = new FileSync(path.join(__dirname, 'db.json'));
 const db = low(adapter);
 
 db.defaults({ leads: [] }).write();
-console.log('✅ Banco de dados conectado — db.json');
+console.log(' Banco de dados conectado — db.json');
 
 
-// ════════════════════════════════════════════
-//  ROTAS DA API
-// ════════════════════════════════════════════
 
-// ── POST /api/leads ──────────────────────────
 app.post('/api/leads', (req, res) => {
   const { nome, email, telefone, bairro, tipo, situacao, mensagem } = req.body;
 
@@ -49,12 +40,12 @@ app.post('/api/leads', (req, res) => {
   };
 
   db.get('leads').push(lead).write();
-  console.log(`📥 Novo lead: ${nome} — ${bairro} (${tipo})`);
+  console.log(` Novo lead: ${nome} — ${bairro} (${tipo})`);
   res.status(201).json({ sucesso: true, lead });
 });
 
 
-// ── GET /api/leads ───────────────────────────
+
 app.get('/api/leads', (req, res) => {
   const SENHA = process.env.ADMIN_SENHA || 'tplace2025';
   if (req.query.senha !== SENHA) {
@@ -65,7 +56,7 @@ app.get('/api/leads', (req, res) => {
 });
 
 
-// ── PATCH /api/leads/:id/status ──────────────
+
 app.patch('/api/leads/:id/status', (req, res) => {
   const SENHA = process.env.ADMIN_SENHA || 'tplace2025';
   if (req.query.senha !== SENHA) {
@@ -81,7 +72,7 @@ app.patch('/api/leads/:id/status', (req, res) => {
 });
 
 
-// ── GET /api/leads/export ────────────────────
+
 app.get('/api/leads/export', (req, res) => {
   const SENHA = process.env.ADMIN_SENHA || 'tplace2025';
   if (req.query.senha !== SENHA) {
@@ -101,13 +92,12 @@ app.get('/api/leads/export', (req, res) => {
 });
 
 
-// ── serve o site ─────────────────────────────
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 
 app.listen(PORT, () => {
-  console.log(`🚀 T'Place backend rodando em http://localhost:${PORT}`);
-  console.log(`📊 Admin: http://localhost:${PORT}/admin.html`);
+  console.log(` T'Place backend rodando em http://localhost:${PORT}`);
+  console.log(` Admin: http://localhost:${PORT}/admin.html`);
 });

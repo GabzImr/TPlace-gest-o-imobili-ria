@@ -6,15 +6,15 @@ const CONFIG = {
   whatsappNumber: '554192145139',
 
   whatsappMsg: (d) =>
-    `Olá Antonio Carlos! Vi o site da T'Place e quero cadastrar meu imóvel. 🏠\n\n` +
+    `Olá Antonio Carlos! Vi o site da T'Place e quero cadastrar meu imóvel. \n\n` +
     `*Meus dados:*\n` +
-    `👤 Nome: ${d.nome}\n` +
-    `📍 Bairro: ${d.bairro}\n` +
-    `🏠 Tipo: ${d.tipo}\n` +
-    `📧 E-mail: ${d.email}\n` +
-    `📞 WhatsApp: ${d.telefone}\n` +
-    (d.situacao ? `📋 Situação: ${d.situacao}\n` : '') +
-    (d.mensagem ? `💬 Obs: ${d.mensagem}` : ''),
+    ` Nome: ${d.nome}\n` +
+    ` Bairro: ${d.bairro}\n` +
+    ` Tipo: ${d.tipo}\n` +
+    ` E-mail: ${d.email}\n` +
+    ` WhatsApp: ${d.telefone}\n` +
+    (d.situacao ? ` Situação: ${d.situacao}\n` : '') +
+    (d.mensagem ? ` Obs: ${d.mensagem}` : ''),
 };
 
 
@@ -191,7 +191,7 @@ function renderAdmin() {
 
       ${leads.length === 0
         ? `<div style="text-align:center;padding:3rem 1rem;color:rgba(255,255,255,.35)">
-             <div style="font-size:2.5rem;margin-bottom:.75rem">📭</div>
+             <div style="font-size:2.5rem;margin-bottom:.75rem"></div>
              <p>Nenhum lead capturado ainda.<br/>Preencha o formulário para testar!</p>
            </div>`
         : leads.slice().reverse().map(l => `
