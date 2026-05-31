@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <title>T'Place — Painel Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --orange: #E8761A; --orange-light: #f59340;
+      --dark: #1a1a1a; --dark2: #2a2a2a; --dark3: #333;
+      --white: #fff; --cream: #faf8f6;
+      --text: #4a5568; --border: rgba(232,118,26,.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #111; color: var(--white); min-height: 100vh; }
+
+    /* LOGIN */
+    .login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: #111;
+    }
+    .login-box {
+      background: #1e1e1e; border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.5rem; width: 100%; max-width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .login-logo {
+      text-align: center; margin-bottom: 2rem;
+    }
+    .login-logo svg { height: 36px; }
+    .admin-logo-img { height: 36px; width: auto; object-fit: contain; mix-blend-mode: lighten; }
+    .login-logo .admin-logo-img { height: 56px; margin-bottom: .5rem; mix-blend-mode: lighten; }
+    .login-logo p { color: rgba(255,255,255,.4); font-size: .8rem; margin-top: .5rem; letter-spacing: .1em; text-transform: uppercase; }
+    .login-box h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+    .login-box input {
+      width: 100%; background: #2a2a2a; border: 1.5px solid #333;
+      border-radius: 10px; padding: .8rem 1rem; color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-size: .95rem; margin-bottom: 1rem; outline: none;
+    }
+    .login-box input:focus { border-color: var(--orange); }
+    .login-box button {
+      width: 100%; background: var(--orange); color: var(--white);
+      border: none; border-radius: 10px; padding: .85rem;
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background .2s;
+    }
+    .login-box button:hover { background: var(--orange-light); }
+    .login-error { color: #ff6b6b; font-size: .85rem; margin-top: .75rem; text-align: center; }
+
+    /* DASHBOARD */
+    .dashboard { display: none; }
+    .topbar {
+      background: #1a1a1a; border-bottom: 1px solid #2a2a2a;
+      padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .topbar svg { height: 28px; }
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+    .btn-export {
+      background: rgba(232,118,26,.15); color: var(--orange);
+      border: 1px solid rgba(232,118,26,.3); border-radius: 8px;
+      padding: .45rem 1rem; font-size: .85rem; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: none;
+    }
+    .btn-export:hover { background: rgba(232,118,26,.25); }
+    .btn-logout {
+      background: rgba(255,255,255,.08); color: rgba(255,255,255,.6);
+      border: none; border-radius: 8px; padding: .45rem 1rem;
+      font-size: .85rem; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+
+    .main { padding: 2rem; max-width: 1100px; margin: 0 auto; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 14px; padding: 1.25rem;
+    }
+    .stat-card .num { font-size: 2rem; font-weight: 700; color: var(--orange); }
+    .stat-card .lbl { font-size: .8rem; color: rgba(255,255,255,.4); margin-top: .25rem; }
+
+    /* FILTER */
+    .filters { display: flex; gap: .75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .filter-btn {
+      background: #1e1e1e; border: 1px solid #333; color: rgba(255,255,255,.6);
+      border-radius: 50px; padding: .4rem 1rem; font-size: .82rem;
+      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: .2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--orange); border-color: var(--orange); color: var(--white);
+    }
+
+    /* TABLE */
+    .table-wrap { background: #1e1e1e; border-radius: 16px; border: 1px solid #2a2a2a; overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: #252525; padding: .85rem 1rem; text-align: left;
+      font-size: .75rem; text-transform: uppercase; letter-spacing: .08em;
+      color: rgba(255,255,255,.4); font-weight: 600;
+    }
+    td { padding: .85rem 1rem; border-top: 1px solid #2a2a2a; font-size: .88rem; vertical-align: middle; }
+    tr:hover td { background: rgba(255,255,255,.02); }
+
+    .badge {
+      display: inline-block; padding: .25rem .75rem; border-radius: 50px;
+      font-size: .72rem; font-weight: 700;
+    }
+    .badge-Novo        { background: rgba(232,118,26,.15); color: #f59340; }
+    .badge-Contatado   { background: rgba(66,153,225,.15); color: #63b3ed; }
+    .badge-Negociando  { background: rgba(159,122,234,.15); color: #b794f4; }
+    .badge-Fechado     { background: rgba(72,187,120,.15); color: #68d391; }
+    .badge-Descartado  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.3); }
+
+    select.status-select {
+      background: #2a2a2a; border: 1px solid #3a3a3a; color: var(--white);
+      border-radius: 8px; padding: .3rem .6rem; font-size: .8rem;
+      font-family: 'DM Sans', sans-serif; cursor: pointer; outline: none;
+    }
+    .action-btns { display: flex; gap: .5rem; }
+    .btn-wa {
+      background: rgba(37,211,102,.15); color: #25d366;
+      border: 1px solid rgba(37,211,102,.2); border-radius: 6px;
+      padding: .3rem .65rem; text-decoration: none; font-size: .78rem; font-weight: 600;
+    }
+    .btn-mail {
+      background: rgba(232,118,26,.12); color: var(--orange);
+      border: 1px solid rgba(232,118,26,.2); border-radius: 6px;
+      padding: .3rem .65rem; text-decoration: none; font-size: .78rem; font-weight: 600;
+    }
+
+    .empty {
+      text-align: center; padding: 4rem 2rem; color: rgba(255,255,255,.3);
+    }
+    .empty div { font-size: 2.5rem; margin-bottom: .75rem; }
+
+    .loading { text-align: center; padding: 3rem; color: rgba(255,255,255,.4); }
+
+    @media (max-width: 700px) {
+      .main { padding: 1rem; }
+      th:nth-child(4), td:nth-child(4),
+      th:nth-child(5), td:nth-child(5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="logo.jpg" class="admin-logo-img" alt="T'Place"/>
+      <p>Painel Administrativo</p>
+    </div>
+    <h2>Entrar</h2>
+    <input type="password" id="senha-input" placeholder="Senha de acesso" onkeydown="if(event.key==='Enter')login()"/>
+    <button onclick="login()">Acessar painel</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="topbar">
+    <img src="logo.jpg" class="admin-logo-img" alt="T'Place"/>
+    <div class="topbar-right">
+      <a class="btn-export" id="btn-export" href="#" onclick="exportCSV()">📥 Exportar CSV</a>
+      <button class="btn-logout" onclick="logout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="stats" id="stats"></div>
+
+    <div class="filters" id="filters">
+      <button class="filter-btn active" onclick="filtrar('Todos', this)">Todos</button>
+      <button class="filter-btn" onclick="filtrar('Novo', this)">🟠 Novos</button>
+      <button class="filter-btn" onclick="filtrar('Contatado', this)">🔵 Contatados</button>
+      <button class="filter-btn" onclick="filtrar('Negociando', this)">🟣 Negociando</button>
+      <button class="filter-btn" onclick="filtrar('Fechado', this)">🟢 Fechados</button>
+      <button class="filter-btn" onclick="filtrar('Descartado', this)">⚫ Descartados</button>
+    </div>
+
+    <div class="table-wrap">
+      <div class="loading" id="loading">Carregando leads...</div>
+      <table id="leads-table" style="display:none">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Contato</th>
+            <th>Imóvel</th>
+            <th>Situação</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="leads-body"></tbody>
+      </table>
+      <div class="empty" id="empty" style="display:none">
+        <div>📭</div>
+        <p>Nenhum lead encontrado.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = 'http://localhost:3001'; // mesmo domínio — Render serve tudo junto
+  let SENHA = '';
+  let todosLeads = [];
+  let filtroAtual = 'Todos';
+
+  // ─── LOGIN ──────────────────────────────
+  async function login() {
+    const senha = document.getElementById('senha-input').value;
+    const res = await fetch(`${API}/api/leads?senha=${senha}`);
+    if (res.status === 401) {
+      document.getElementById('login-error').textContent = 'Senha incorreta.';
+      return;
+    }
+    SENHA = senha;
+    const data = await res.json();
+    todosLeads = data.leads;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    renderStats();
+    renderTabela(todosLeads);
+    document.getElementById('loading').style.display = 'none';
+  }
+
+  function logout() {
+    SENHA = ''; todosLeads = [];
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('senha-input').value = '';
+  }
+
+  // ─── STATS ─────────────────────────────
+  function renderStats() {
+    const total     = todosLeads.length;
+    const novos     = todosLeads.filter(l => l.status === 'Novo').length;
+    const fechados  = todosLeads.filter(l => l.status === 'Fechado').length;
+    const negoc     = todosLeads.filter(l => l.status === 'Negociando').length;
+
+    document.getElementById('stats').innerHTML = `
+      <div class="stat-card"><div class="num">${total}</div><div class="lbl">Total de leads</div></div>
+      <div class="stat-card"><div class="num">${novos}</div><div class="lbl">Novos</div></div>
+      <div class="stat-card"><div class="num">${negoc}</div><div class="lbl">Negociando</div></div>
+      <div class="stat-card"><div class="num">${fechados}</div><div class="lbl">Fechados</div></div>
+    `;
+  }
+
+  // ─── FILTRO ─────────────────────────────
+  function filtrar(status, btn) {
+    filtroAtual = status;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const lista = status === 'Todos' ? todosLeads : todosLeads.filter(l => l.status === status);
+    renderTabela(lista);
+  }
+
+  // ─── TABELA ─────────────────────────────
+  function renderTabela(leads) {
+    const tbody = document.getElementById('leads-body');
+    const table = document.getElementById('leads-table');
+    const empty = document.getElementById('empty');
+
+    if (!leads.length) {
+      table.style.display = 'none';
+      empty.style.display = 'block';
+      return;
+    }
+
+    table.style.display = 'table';
+    empty.style.display = 'none';
+
+    tbody.innerHTML = leads.map(l => `
+      <tr>
+        <td><strong>${esc(l.nome)}</strong></td>
+        <td>
+          <div style="font-size:.82rem">${esc(l.email)}</div>
+          <div style="color:rgba(255,255,255,.5);font-size:.78rem">${esc(l.telefone)}</div>
+        </td>
+        <td>
+          <div>${esc(l.bairro)}</div>
+          <div style="color:rgba(255,255,255,.5);font-size:.78rem">${esc(l.tipo)}</div>
+        </td>
+        <td style="color:rgba(255,255,255,.5);font-size:.82rem">${esc(l.situacao || '—')}</td>
+        <td style="color:rgba(255,255,255,.4);font-size:.78rem">${esc(l.criado_em)}</td>
+        <td>
+          <select class="status-select" onchange="atualizarStatus(${l.id}, this.value)">
+            ${['Novo','Contatado','Negociando','Fechado','Descartado'].map(s =>
+              `<option ${l.status===s?'selected':''}>${s}</option>`
+            ).join('')}
+          </select>
+        </td>
+        <td>
+          <div class="action-btns">
+            <a class="btn-wa" href="https://wa.me/55${l.telefone.replace(/\D/g,'')}" target="_blank">💬 WA</a>
+            <a class="btn-mail" href="mailto:${esc(l.email)}">📧</a>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // ─── ATUALIZAR STATUS ───────────────────
+  async function atualizarStatus(id, status) {
+    await fetch(`${API}/api/leads/${id}/status?senha=${SENHA}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+    // Atualiza localmente sem recarregar
+    const lead = todosLeads.find(l => l.id === id);
+    if (lead) lead.status = status;
+    renderStats();
+  }
+
+  // ─── EXPORTAR CSV ───────────────────────
+  function exportCSV() {
+    window.open(`${API}/api/leads/export?senha=${SENHA}`, '_blank');
+  }
+
+  function esc(str) {
+    return (str || '').toString()
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>

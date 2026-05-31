@@ -1,0 +1,16 @@
+{
+  "leads": [
+    {
+      "id": 1780236315403,
+      "nome": "test",
+      "email": "loopzgb@gmail.com",
+      "telefone": "(41) 98466-0596",
+      "bairro": "Centro",
+      "tipo": "1quarto",
+      "situacao": "alugado-longo",
+      "mensagem": "",
+      "status": "Novo",
+      "criado_em": "31/05/2026, 11:05:15"
+    }
+  ]
+}
