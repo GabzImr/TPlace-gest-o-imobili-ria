@@ -5,15 +5,15 @@ const CONFIG = {
 
 
   whatsappMsg: (d) =>
-    `Olá Antonio Carlos! Vi o site da T'Place e quero cadastrar meu imóvel. 🏠\n\n` +
+    `Olá Antonio Carlos! Vi o site da T'Place e quero cadastrar meu imóvel. \n\n` +
     `*Meus dados:*\n` +
-    `👤 Nome: ${d.nome}\n` +
-    `📍 Bairro: ${d.bairro}\n` +
-    `🏠 Tipo: ${d.tipo}\n` +
-    `📧 E-mail: ${d.email}\n` +
-    `📞 WhatsApp: ${d.telefone}\n` +
-    (d.situacao ? `📋 Situação atual: ${d.situacao}\n` : '') +
-    (d.mensagem ? `💬 Obs: ${d.mensagem}` : ''),
+    `Nome: ${d.nome}\n` +
+    `Bairro: ${d.bairro}\n` +
+    `Tipo: ${d.tipo}\n` +
+    `E-mail: ${d.email}\n` +
+    `WhatsApp: ${d.telefone}\n` +
+    (d.situacao ? `Situação atual: ${d.situacao}\n` : '') +
+    (d.mensagem ? `Obs: ${d.mensagem}` : ''),
 };
 
 
@@ -216,9 +216,9 @@ function renderAdmin() {
                 font-size:.7rem;padding:.2rem .6rem;border-radius:50px;font-weight:600">${l.status}</span>
             </div>
             <div style="display:grid;gap:.35rem;margin-bottom:1rem">
-              <div style="color:rgba(255,255,255,.75);font-size:.85rem">📧 ${escHtml(l.email)}</div>
-              <div style="color:rgba(255,255,255,.75);font-size:.85rem">📞 ${escHtml(l.telefone)}</div>
-              <div style="color:rgba(255,255,255,.75);font-size:.85rem">📍 ${escHtml(l.bairro)} · ${escHtml(l.tipo)}</div>
+              <div style="color:rgba(255,255,255,.75);font-size:.85rem"> ${escHtml(l.email)}</div>
+              <div style="color:rgba(255,255,255,.75);font-size:.85rem"> ${escHtml(l.telefone)}</div>
+              <div style="color:rgba(255,255,255,.75);font-size:.85rem"> ${escHtml(l.bairro)} · ${escHtml(l.tipo)}</div>
               ${l.situacao ? `<div style="color:rgba(255,255,255,.5);font-size:.82rem">Situação: ${escHtml(l.situacao)}</div>` : ''}
               ${l.mensagem ? `<div style="color:rgba(255,255,255,.5);font-size:.82rem;font-style:italic">"${escHtml(l.mensagem)}"</div>` : ''}
             </div>
@@ -226,15 +226,15 @@ function renderAdmin() {
               <a href="https://wa.me/55${l.telefone.replace(/\D/g,'')}" target="_blank"
                 style="background:rgba(37,211,102,.15);color:#25d366;border:1px solid rgba(37,211,102,.25);
                        border-radius:8px;padding:.35rem .85rem;text-decoration:none;font-size:.78rem;font-weight:600">
-                💬 WhatsApp
+                 WhatsApp
               </a>
               <a href="mailto:${escHtml(l.email)}"
                 style="background:rgba(201,168,76,.12);color:#e8c97a;border:1px solid rgba(201,168,76,.2);
                        border-radius:8px;padding:.35rem .85rem;text-decoration:none;font-size:.78rem;font-weight:600">
-                📧 E-mail
+                 E-mail
               </a>
             </div>
-            <div style="color:rgba(255,255,255,.25);font-size:.72rem;margin-top:.75rem">🕐 ${l.criadoEm}</div>
+            <div style="color:rgba(255,255,255,.25);font-size:.72rem;margin-top:.75rem"> ${l.criadoEm}</div>
           </div>
         `).join('')
       }
