@@ -11,16 +11,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// --- CONEXÃO COM O SUPABASE ---
+
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 console.log(' Conectado ao Supabase com sucesso!');
 
-// --- ROTAS DA API ---
 
-// 1. Criar um novo Lead
+
+
 app.post('/api/leads', async (req, res) => {
   const { nome, email, telefone, bairro, tipo, situacao, mensagem } = req.body;
 
@@ -37,7 +37,7 @@ app.post('/api/leads', async (req, res) => {
           situacao: situacao || '', 
           mensagem: mensagem || '',
           status: 'Novo'
-          // O Supabase cria o ID e a data de criação automaticamente se a tabela estiver configurada assim!
+          
         }
       ])
       .select();
@@ -52,7 +52,7 @@ app.post('/api/leads', async (req, res) => {
   }
 });
 
-// 2. Listar todos os Leads
+
 app.get('/api/leads', async (req, res) => {
   const SENHA = process.env.ADMIN_SENHA || 'tplace2025';
   if (req.query.senha !== SENHA) {
@@ -63,7 +63,7 @@ app.get('/api/leads', async (req, res) => {
     const { data: leads, error } = await supabase
       .from('leads')
       .select('*')
-      .order('id', { ascending: false }); // Ordena do mais novo para o mais antigo
+      .order('id', { ascending: false }); 
 
     if (error) throw error;
 
@@ -73,7 +73,6 @@ app.get('/api/leads', async (req, res) => {
   }
 });
 
-// 3. Atualizar Status de um Lead
 app.patch('/api/leads/:id/status', async (req, res) => {
   const SENHA = process.env.ADMIN_SENHA || 'tplace2025';
   if (req.query.senha !== SENHA) {
@@ -100,7 +99,7 @@ app.patch('/api/leads/:id/status', async (req, res) => {
   }
 });
 
-// 4. Exportar para CSV
+
 app.get('/api/leads/export', async (req, res) => {
   const SENHA = process.env.ADMIN_SENHA || 'tplace2025';
   if (req.query.senha !== SENHA) {
@@ -118,7 +117,7 @@ app.get('/api/leads/export', async (req, res) => {
     const header = 'ID,Nome,Email,Telefone,Bairro,Tipo,Situação,Mensagem,Status,Criado em';
     const rows = leads.map(l =>
       [l.id, l.nome, l.email, l.telefone, l.bairro, l.tipo,
-       l.situacao, l.mensagem, l.status, l.created_at] // O Supabase costuma usar created_at por padrão
+       l.situacao, l.mensagem, l.status, l.created_at] 
       .map(v => `"${(v||'').toString().replace(/"/g,'""')}"`)
       .join(',')
     );

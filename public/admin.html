@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  
   <title>T'Place — Painel Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
@@ -16,7 +15,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: #111; color: var(--white); min-height: 100vh; }
 
-    
+    /* LOGIN */
     .login-screen {
       min-height: 100vh; display: flex; align-items: center; justify-content: center;
       background: #111;
@@ -49,7 +48,7 @@
     .login-box button:hover { background: var(--orange-light); }
     .login-error { color: #ff6b6b; font-size: .85rem; margin-top: .75rem; text-align: center; }
 
-    
+    /* DASHBOARD */
     .dashboard { display: none; }
     .topbar {
       background: #1a1a1a; border-bottom: 1px solid #2a2a2a;
@@ -73,7 +72,7 @@
 
     .main { padding: 2rem; max-width: 1100px; margin: 0 auto; }
 
-    
+    /* STATS */
     .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
     .stat-card {
       background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 14px; padding: 1.25rem;
@@ -81,7 +80,7 @@
     .stat-card .num { font-size: 2rem; font-weight: 700; color: var(--orange); }
     .stat-card .lbl { font-size: .8rem; color: rgba(255,255,255,.4); margin-top: .25rem; }
 
-    
+    /* FILTER */
     .filters { display: flex; gap: .75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
     .filter-btn {
       background: #1e1e1e; border: 1px solid #333; color: rgba(255,255,255,.6);
@@ -92,7 +91,7 @@
       background: var(--orange); border-color: var(--orange); color: var(--white);
     }
 
-    
+    /* TABLE */
     .table-wrap { background: #1e1e1e; border-radius: 16px; border: 1px solid #2a2a2a; overflow: hidden; }
     table { width: 100%; border-collapse: collapse; }
     th {
@@ -165,7 +164,7 @@
   <div class="topbar">
     <img src="logo.jpg" class="admin-logo-img" alt="T'Place"/>
     <div class="topbar-right">
-      <a class="btn-export" id="btn-export" href="#" onclick="exportCSV()">📥 Exportar CSV</a>
+      <a class="btn-export" id="btn-export" href="#" onclick="exportCSV()">Exportar CSV</a>
       <button class="btn-logout" onclick="logout()">Sair</button>
     </div>
   </div>
@@ -175,11 +174,11 @@
 
     <div class="filters" id="filters">
       <button class="filter-btn active" onclick="filtrar('Todos', this)">Todos</button>
-      <button class="filter-btn" onclick="filtrar('Novo', this)">🟠 Novos</button>
-      <button class="filter-btn" onclick="filtrar('Contatado', this)">🔵 Contatados</button>
-      <button class="filter-btn" onclick="filtrar('Negociando', this)">🟣 Negociando</button>
-      <button class="filter-btn" onclick="filtrar('Fechado', this)">🟢 Fechados</button>
-      <button class="filter-btn" onclick="filtrar('Descartado', this)">⚫ Descartados</button>
+      <button class="filter-btn" onclick="filtrar('Novo', this)">Novos</button>
+      <button class="filter-btn" onclick="filtrar('Contatado', this)">Contatados</button>
+      <button class="filter-btn" onclick="filtrar('Negociando', this)">Negociando</button>
+      <button class="filter-btn" onclick="filtrar('Fechado', this)">Fechados</button>
+      <button class="filter-btn" onclick="filtrar('Descartado', this)">Descartados</button>
     </div>
 
     <div class="table-wrap">
@@ -207,12 +206,32 @@
 </div>
 
 <script>
-  const API = 'http://localhost:3001'; 
+  const API = ''; 
   let SENHA = '';
   let todosLeads = [];
   let filtroAtual = 'Todos';
 
   
+  window.addEventListener('load', async () => {
+    const senhaSalva = localStorage.getItem('tplace_admin_senha');
+    if (senhaSalva) {
+      const res = await fetch(`${API}/api/leads?senha=${senhaSalva}`);
+      if (res.ok) {
+        SENHA = senhaSalva;
+        const data = await res.json();
+        todosLeads = data.leads;
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        renderStats();
+        renderTabela(todosLeads);
+        document.getElementById('loading').style.display = 'none';
+      } else {
+        localStorage.removeItem('tplace_admin_senha');
+      }
+    }
+  });
+
+ 
   async function login() {
     const senha = document.getElementById('senha-input').value;
     const res = await fetch(`${API}/api/leads?senha=${senha}`);
@@ -221,6 +240,7 @@
       return;
     }
     SENHA = senha;
+    localStorage.setItem('tplace_admin_senha', senha); 
     const data = await res.json();
     todosLeads = data.leads;
     document.getElementById('login-screen').style.display = 'none';
@@ -232,6 +252,7 @@
 
   function logout() {
     SENHA = ''; todosLeads = [];
+    localStorage.removeItem('tplace_admin_senha');
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('dashboard').style.display = 'none';
     document.getElementById('senha-input').value = '';
@@ -252,7 +273,7 @@
     `;
   }
 
-  
+
   function filtrar(status, btn) {
     filtroAtual = status;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -261,7 +282,7 @@
     renderTabela(lista);
   }
 
-  
+ 
   function renderTabela(leads) {
     const tbody = document.getElementById('leads-body');
     const table = document.getElementById('leads-table');
@@ -306,7 +327,7 @@
     `).join('');
   }
 
-  
+ 
   async function atualizarStatus(id, status) {
     await fetch(`${API}/api/leads/${id}/status?senha=${SENHA}`, {
       method: 'PATCH',
