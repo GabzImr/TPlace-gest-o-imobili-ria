@@ -1,4 +1,4 @@
-T'Place Gestão Imobiliária — MVP
+## T'Place Gestão Imobiliária — MVP
 > Landing page com sistema de captação de leads para locação de curta temporada em Curitiba.
 [![Status](https://img.shields.io/badge/status-em%20produ%C3%A7%C3%A3o-brightgreen)](#deploy)
 [![Deploy](https://img.shields.io/badge/deploy-Render.com-4351e8)](#deploy)
@@ -20,6 +20,7 @@ T'Place Gestão Imobiliária — MVP
 
 ##  Problema Resolvido
 A **T'Place** não possuía presença digital nem canal próprio para captar proprietários interessados em colocar seus imóveis para locação no Airbnb e plataformas similares. Todo o processo dependia de **indicações e contatos manuais**, tornando a expansão lenta e limitada.
+
 ##  Solução
 Uma **landing page profissional** com formulário de captação integrado ao **WhatsApp** e **banco de dados em nuvem** (Supabase), permitindo que proprietários encontrem e contatem a empresa online **24 horas por dia**.
 
@@ -37,9 +38,9 @@ Uma **landing page profissional** com formulário de captação integrado ao **W
 -  Botões de contato rápido via **WhatsApp** e **e-mail**
 -  Exportação de leads em **CSV** para Excel
 ### Backend
-- ✔️ API REST com Node.js + Express
-- ✔️ Banco de dados em nuvem com **persistência total** (Supabase / PostgreSQL)
----
+-  API REST com Node.js + Express
+-  Banco de dados em nuvem com **persistência total** (Supabase / PostgreSQL)
+--
 ##  Tecnologias Utilizadas
 T'Place Gestão Imobiliária — MVP
 > Landing page com sistema de captação de leads para locação de curta temporada em Curitiba.
