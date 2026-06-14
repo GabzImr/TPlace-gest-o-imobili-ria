@@ -1,23 +1,122 @@
-# TPlace-gest-o-imobili-ria
 T'Place Gestão Imobiliária — MVP
-
-Landing page com sistema de captação de leads para a empresa T'Place Gestão Imobiliária, desenvolvida como projeto acadêmico MVP (Mínimo Produto Viável) para resolver a dor real de marketing e captação de proprietários de imóveis para locação de curta temporada em Curitiba.
-
-Problema Resolvido
-
-A T'Place não possuía presença digital nem canal próprio para captar proprietários interessados em colocar seus imóveis para locação no Airbnb e plataformas similares. Todo o processo dependia de indicações e contatos manuais, tornando a expansão lenta e limitada. Solução entregue: uma landing page profissional com formulário de captação integrado ao WhatsApp e banco de dados em nuvem, permitindo que proprietários encontrem e contatem a empresa online 24h por dia.
-
-Funcionalidades
-
-Landing page responsiva com seções de apresentação, como funciona, vantagens e depoimentos Formulário de captação de leads com validação em tempo real Envio automático de mensagem para o WhatsApp do responsável ao preencher o formulário Painel administrativo com login para visualizar, filtrar e gerenciar todos os leads Atualização de status dos leads (Novo → Contatado → Negociando → Fechado → Descartado) Exportação de leads em CSV para Excel Banco de dados em nuvem com persistência total dos dados
-
-Tecnologias Utilizadas
-
-TecnologiaFunçãoHTML + CSS + JavaScriptFrontend — estrutura, visual e interatividadeNode.js + ExpressBackend — servidor e rotas da API RESTSupabase (PostgreSQL)Banco de dados em nuvemGoogle FontsTipografia (DM Sans + Playfair Display)WhatsApp API (wa.me)Notificação instantânea de novos leadsGit + GitHubControle de versão e deployRender.comHospedagem do backend (free tier)
-
-Estrutura do Projeto
-
-tplace-backend/ ├── server.js # Backend Node.js + Express + Supabase ├── package.json # Dependências do projeto ├── .env # Variáveis de ambiente (não commitado) ├── .gitignore └── public/ ├── index.html # Landing page principal ├── style.css # Estilos ├── script.js # Lógica do frontend + envio para API ├── admin.html # Painel administrativo └── logo.jpg # Logo da T'Place
+> Landing page com sistema de captação de leads para locação de curta temporada em Curitiba.
+[![Status](https://img.shields.io/badge/status-em%20produ%C3%A7%C3%A3o-brightgreen)](#deploy)
+[![Deploy](https://img.shields.io/badge/deploy-Render.com-4351e8)](#deploy)
+[![Banco de Dados](https://img.shields.io/badge/database-Supabase-3ecf8e)](#tecnologias-utilizadas)
+ **Site:** [tplacegestaoimobiliria.onrender.com](https://tplacegestaoimobiliria.onrender.com)
+ **Admin:** [Painel Administrativo](https://tplacegestaoimobiliria.onrender.com/admin.html)
+---
+##  Índice
+- [Problema Resolvido](#-problema-resolvido)
+- [Solução](#-solução)
+- [Funcionalidades](#-funcionalidades)
+- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [Estrutura do Projeto](#-estrutura-do-projeto)
+- [Como Rodar Localmente](#-como-rodar-localmente)
+- [Variáveis de Ambiente](#-variáveis-de-ambiente)
+- [Deploy](#-deploy)
+- [Painel Administrativo](#-painel-administrativo)
+- [Equipe e Papéis](#-equipe-e-papéis)
+---
+##  Problema Resolvido
+A **T'Place** não possuía presença digital nem canal próprio para captar proprietários interessados em colocar seus imóveis para locação no Airbnb e plataformas similares. Todo o processo dependia de **indicações e contatos manuais**, tornando a expansão lenta e limitada.
+##  Solução
+Uma **landing page profissional** com formulário de captação integrado ao **WhatsApp** e **banco de dados em nuvem** (Supabase), permitindo que proprietários encontrem e contatem a empresa online **24 horas por dia**.
+---
+##  Funcionalidades
+### Landing Page
+-  Layout responsivo com seções: **Apresentação**, **Como Funciona**, **Vantagens** e **Depoimentos**
+-  Formulário de captação de leads com **validação em tempo real**
+-  Envio automático de mensagem para o **WhatsApp** do responsável ao preencher o formulário
+### Painel Administrativo
+-  Login protegido por senha (`ADMIN_SENHA`)
+-  Visualização de todos os leads em tempo real
+-  Filtro por status
+-  Atualização de status diretamente na tabela
+-  Pipeline de status: `Novo → Contatado → Negociando → Fechado → Descartado`
+-  Botões de contato rápido via **WhatsApp** e **e-mail**
+-  Exportação de leads em **CSV** para Excel
+### Backend
+- ✔️ API REST com Node.js + Express
+- ✔️ Banco de dados em nuvem com **persistência total** (Supabase / PostgreSQL)
+---
+## 🛠️ Tecnologias Utilizadas
+|
+ Tecnologia 
+|
+ Função 
+|
+|
+---
+|
+---
+|
+|
+**
+HTML + CSS + JavaScript
+**
+|
+ Frontend — estrutura, visual e interatividade 
+|
+|
+**
+Node.js + Express
+**
+|
+ Backend — servidor e rotas da API REST 
+|
+|
+**
+Supabase (PostgreSQL)
+**
+|
+ Banco de dados em nuvem 
+|
+|
+**
+Google Fonts
+**
+|
+ Tipografia (DM Sans + Playfair Display) 
+|
+|
+**
+WhatsApp API (
+`wa.me`
+)
+**
+|
+ Notificação instantânea de novos leads 
+|
+|
+**
+Git + GitHub
+**
+|
+ Controle de versão e deploy 
+|
+|
+**
+Render.com
+**
+|
+ Hospedagem do backend (free tier) 
+|
+---
+##  Estrutura do Projeto
+```
+tplace-backend/
+├── server.js          # Backend Node.js + Express + Supabase
+├── package.json       # Dependências do projeto
+├── .env               # Variáveis de ambiente (não commitado)
+├── .gitignore
+└── public/
+    ├── index.html     # Landing page principal
+    ├── style.css      # Estilos
+    ├── script.js      # Lógica do frontend + envio para API
+    ├── admin.html     # Painel administrativo
+    └── logo.jpg       # Logo da T'Place
+```
 
 Deploy
 
