@@ -571,3 +571,26 @@ body {
   .hero-stats { flex-wrap: wrap; }
   .hero-image-wrap { display: none; }
 }
+
+
+.logo-img {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+.logo-img-footer {
+  height: 55px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.logo-img-footer{
+    height: 55px;
+    width: auto;
+    display: block;
+}
