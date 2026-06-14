@@ -29,6 +29,7 @@
 - [Deploy](#-deploy)
 - [Painel Administrativo](#-painel-administrativo)
 - [Equipe e Papéis](#-equipe-e-papéis)
+- [Links](#-links)
 
 ##  Problema Resolvido
 A **T'Place** não possuía presença digital nem canal próprio para captar proprietários interessados em colocar seus imóveis para locação no Airbnb e plataformas similares. Todo o processo dependia de **indicações e contatos manuais**, tornando a expansão lenta e limitada.
@@ -69,13 +70,13 @@ tplace-backend/
     └── logo.jpg       # Logo da T'Place
 ```
 
-Deploy
+## Deploy
 
 O projeto está hospedado no Render.com com deploy automático via GitHub. Qualquer git push na branch main atualiza o site automaticamente em 1-2 minutos. Variáveis de ambiente configuradas no Render:
 
 SUPABASE_URL SUPABASE_KEY ADMIN_SENHA
 
-Painel Administrativo
+## Painel Administrativo
 
 Acessível em /admin.html — login com senha definida em ADMIN_SENHA.
 
@@ -85,7 +86,7 @@ Visualização de todos os leads em tempo real Filtro por status Atualização d
 
 Projeto desenvolvido como atividade prática de startup — "Do Zero ao MVP" — com o objetivo de vivenciar a rotina de uma startup de TI, validando a jornada do usuário e entregando um software funcional para atender uma dor real de uma empresa parceira.
 
-Papéis do projeto:
+## Papéis do projeto:
 
 CEO / Product Owner UX/UI Designer Desenvolvedor Full Stack QA / Tester
 
